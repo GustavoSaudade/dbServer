@@ -1,0 +1,8 @@
+com\prova\almocodemocratico\configuration\AlmocoDemocraticoConfiguration.class
+com\prova\almocodemocratico\service\UserService.class
+com\prova\almocodemocratico\controller\AlmocoDemocraticoRestController.class
+com\prova\almocodemocratico\controller\IndexController.class
+com\prova\almocodemocratico\service\UserServiceImpl.class
+com\prova\almocodemocrativo\model\User.class
+com\prova\almocodemocratico\configuration\AlmocoDemocraticoInitializer.class
+com\prova\almocodemocratico\configuration\CORSFilter.class
