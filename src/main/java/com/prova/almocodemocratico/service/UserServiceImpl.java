@@ -62,9 +62,12 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
-	//TODO: trocar para comparação de ID
 	public boolean isUserExist(User user) {
 		return findByName(user.getUsername())!=null;
+	}
+
+	public boolean isUserExistString(String username) {
+		return findByName(username)!=null;
 	}
 	
 	public void deleteAllUsers(){

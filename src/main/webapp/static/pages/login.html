@@ -1,1 +1,12 @@
-{{message}}
+<div id="loginContent">
+    
+    <div id="titulo">{{titulo}}</div>
+    
+    <div id="loginBox">
+        <form name="formAutenticacao" ng-submit="requestAutenticacao()">
+            <input class="inputLogin" type="text" placeholder="Insira seu usuário" ng-model="usuario.username"></input>
+            <input class="inputLogin" type="password" placeholder="Insira sua senha"></input>
+            <input class="inputLogin" type="submit" />
+        </form>
+    </div>
+</div>

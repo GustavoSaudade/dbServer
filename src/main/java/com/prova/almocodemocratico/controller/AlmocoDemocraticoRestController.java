@@ -24,6 +24,20 @@ public class AlmocoDemocraticoRestController {
     UserService userService;  //Service which will do all data retrieval/manipulation work
  
     
+  @RequestMapping(value = "/login/", method = RequestMethod.POST)
+    public ResponseEntity<Void> login(@RequestBody String username) {
+        System.out.println("Tentativa de login " + username);
+ 
+        if (!userService.isUserExistString(username)) {
+            System.out.println("Você não é um usuário do nosso sistem " + username + " !!!!!");
+            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+        }
+ 
+        //userService.saveUser(user);
+ 
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+    
     //-------------------Retrieve All Users--------------------------------------------------------
      
     @RequestMapping(value = "/user/", method = RequestMethod.GET)

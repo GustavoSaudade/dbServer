@@ -2,10 +2,11 @@
 
 App.factory('UserService', ['$http', '$q', function($http, $q){
 
-    var REST_SERVICE_URI = 'http://localhost:8080/almocoDemocratico/user/';
+    var REST_SERVICE_URI = 'http://localhost:8080/almocoDemocratico/login/';
 
     var factory = {
-        fetchAllUsers: fetchAllUsers,
+        logar: logar,
+    	fetchAllUsers: fetchAllUsers,
         createUser: createUser,
         updateUser:updateUser,
         deleteUser:deleteUser
@@ -13,6 +14,21 @@ App.factory('UserService', ['$http', '$q', function($http, $q){
 
     return factory;
 
+    function logar(username) {
+    	var deferred = $q.defer();
+    	$http.post(REST_SERVICE_URI, username)
+	    	.then(
+	                function (response) {
+	                    deferred.resolve(response.data);
+	                },
+	                function(errResponse){
+	                    console.error('Error while login');
+	                    deferred.reject(errResponse);
+	                }
+	            );
+	    return deferred.promise;
+    }
+    
     function fetchAllUsers() {
         var deferred = $q.defer();
         $http.get(REST_SERVICE_URI)
