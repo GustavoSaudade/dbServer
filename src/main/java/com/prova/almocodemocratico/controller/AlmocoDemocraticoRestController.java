@@ -16,30 +16,37 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.prova.almocodemocratico.service.UserService;
 import com.prova.almocodemocrativo.model.User;
+
+import com.prova.almocodemocratico.service.RestauranteService;
+import com.prova.almocodemocrativo.model.Restaurante;
  
 @RestController
 public class AlmocoDemocraticoRestController {
  
     @Autowired
-    UserService userService;  //Service which will do all data retrieval/manipulation work
- 
+    UserService userService;  
+
+    @Autowired
+    RestauranteService restauranteService; 
     
-  @RequestMapping(value = "/login/", method = RequestMethod.POST)
+    //===================================== LOGIN ===================================================
+    @RequestMapping(value = "/login/", method = RequestMethod.POST)
     public ResponseEntity<Void> login(@RequestBody String username) {
         System.out.println("Tentativa de login " + username);
- 
+        
         if (!userService.isUserExistString(username)) {
             System.out.println("Você não é um usuário do nosso sistem " + username + " !!!!!");
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
- 
+        
         //userService.saveUser(user);
- 
+        
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+    //===================================== LOGIN ===================================================
     
+    //===================================== USERS ===================================================
     //-------------------Retrieve All Users--------------------------------------------------------
-     
     @RequestMapping(value = "/user/", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllUsers() {
         List<User> users = userService.findAllUsers();
@@ -49,10 +56,7 @@ public class AlmocoDemocraticoRestController {
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
  
- 
-    
     //-------------------Retrieve Single User--------------------------------------------------------
-     
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUser(@PathVariable("id") long id) {
         System.out.println("Fetching User with id " + id);
@@ -63,11 +67,8 @@ public class AlmocoDemocraticoRestController {
         }
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
- 
-     
      
     //-------------------Create a User--------------------------------------------------------
-     
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
     public ResponseEntity<Void> createUser(@RequestBody User user,    UriComponentsBuilder ucBuilder) {
         System.out.println("Creating User " + user.getUsername());
@@ -83,11 +84,8 @@ public class AlmocoDemocraticoRestController {
         headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
- 
     
-     
     //------------------- Update a User --------------------------------------------------------
-     
     @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
     public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
         System.out.println("Updating User " + id);
@@ -106,11 +104,8 @@ public class AlmocoDemocraticoRestController {
         userService.updateUser(currentUser);
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
- 
-    
     
     //------------------- Delete a User --------------------------------------------------------
-     
     @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteUser(@PathVariable("id") long id) {
         System.out.println("Fetching & Deleting User with id " + id);
@@ -124,11 +119,7 @@ public class AlmocoDemocraticoRestController {
         userService.deleteUserById(id);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
- 
-     
-    
-    //------------------- Delete All Users --------------------------------------------------------
-     
+    //------------------- Delete All Users -----------------------------------------------------
     @RequestMapping(value = "/user/", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteAllUsers() {
         System.out.println("Deleting All Users");
@@ -136,5 +127,46 @@ public class AlmocoDemocraticoRestController {
         userService.deleteAllUsers();
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
+    //===================================== USERS ===================================================
+
+    //===================================== RESTAURANTES ============================================
+    //-------------------Retrieve All Restaurantes--------------------------------------------------------
+    @RequestMapping(value = "/restaurante/", method = RequestMethod.GET)
+    public ResponseEntity<List<Restaurante>> listAllRestaurantes() {
+        List<Restaurante> restaurantes = restauranteService.findAllRestaurantes();
+        if(restaurantes.isEmpty()){
+            return new ResponseEntity<List<Restaurante>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Restaurante>>(restaurantes, HttpStatus.OK);
+    }
+
+    //-------------------Retrieve Single Restaurante--------------------------------------------------------
+    @RequestMapping(value = "/restaurante/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Restaurante> getRestaurante(@PathVariable("id") long id) {
+        System.out.println("Fetching Restaurante with id " + id);
+        Restaurante restaurante = restauranteService.findById(id);
+        if (restaurante == null) {
+            System.out.println("Restaurante with id " + id + " not found");
+            return new ResponseEntity<Restaurante>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Restaurante>(restaurante, HttpStatus.OK);
+    }
+
+    //-------------------Create a Restaurante--------------------------------------------------------
+    @RequestMapping(value = "/restaurante/", method = RequestMethod.POST)
+    public ResponseEntity<Void> createRestaurante(@RequestBody Restaurante restaurante, UriComponentsBuilder ucBuilder) {
+        System.out.println("Creating Restaurante " + restaurante.getNome());
  
+        if (restauranteService.isRestauranteExist(restaurante)) {
+            System.out.println("A Restaurante with name " + restaurante.getNome() + " already exist");
+            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+        }
+ 
+        restauranteService.saveRestaurante(restaurante);
+ 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/restaurante/{id}").buildAndExpand(restaurante.getId()).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+    //===================================== RESTAURANTES ============================================
 }

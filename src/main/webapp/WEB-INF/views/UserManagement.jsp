@@ -9,6 +9,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
     <script src="<c:url value='/static/js/app.js' />"></script>
     <script src="<c:url value='/static/js/service/user_service.js' />"></script>
+    <script src="<c:url value='/static/js/service/restaurante_service.js' />"></script>
     <script src="<c:url value='/static/js/controller/user_controller.js' />"></script>
     <script src="<c:url value='/static/js/controller/login_controller.js' />"></script>
     <script src="<c:url value='/static/js/controller/logado_controller.js' />"></script>
