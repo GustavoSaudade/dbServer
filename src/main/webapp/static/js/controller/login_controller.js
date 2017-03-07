@@ -1,6 +1,6 @@
 'use strict';
 
-App.controller('login_controller', ['$scope','UserService', function($scope, UserService) {
+App.controller('login_controller', ['$scope', '$location', 'UserService', function($scope, $location, UserService) {
     
     $scope.titulo = 'ALMOÇO DEMOCRÁTICO';
     $scope.message = 'Look! I am an about page.';
@@ -14,10 +14,13 @@ App.controller('login_controller', ['$scope','UserService', function($scope, Use
     	UserService.logar($scope.usuario.username)
         .then(
         function(data){
-        	console.log("sucesso!" + data)
+        	console.log("sucesso!" + data);
+            $location.path("/logado");
+
         },
         function(errResponse){
-            console.log('Error while Login' + errResponse);
+            console.log('Erro de Login' + errResponse);
+            $location.path("/errologin");
         }
     );
     }
