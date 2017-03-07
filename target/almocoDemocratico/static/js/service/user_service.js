@@ -2,7 +2,8 @@
 
 App.factory('UserService', ['$http', '$q', function($http, $q){
 
-    var REST_SERVICE_URI = 'http://localhost:8080/almocoDemocratico/login/';
+    var REST_SERVICE_URI_LOGIN = 'http://localhost:8080/almocoDemocratico/login/';
+    var REST_SERVICE_URI = 'http://localhost:8080/almocoDemocratico/user/';
 
     var factory = {
         logar: logar,
@@ -16,7 +17,7 @@ App.factory('UserService', ['$http', '$q', function($http, $q){
 
     function logar(username) {
     	var deferred = $q.defer();
-    	$http.post(REST_SERVICE_URI, username)
+    	$http.post(REST_SERVICE_URI_LOGIN, username)
 	    	.then(
 	                function (response) {
 	                    deferred.resolve(response.data);

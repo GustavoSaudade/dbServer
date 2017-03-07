@@ -2,7 +2,7 @@
 
 App.controller('login_controller', ['$scope', '$location', 'UserService', function($scope, $location, UserService) {
     
-    $scope.titulo = 'ALMOÇO DEMOCRÁTICO';
+    $scope.headerTitle = 'ALMOÇO DEMOCRÁTICO';
     $scope.message = 'Look! I am an about page.';
 
     $scope.usuario = {

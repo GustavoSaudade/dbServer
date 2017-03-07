@@ -42,14 +42,14 @@ body, .form-control{
 }
 
 /** LOGIN PAGE **/
-#loginContent {
+.superContent {
   position: absolute;
   width: 100%;
   height: 100%;
   background: #83b2d0;
 }
 
-#titulo {
+.generalHeader {
   position: relative;
   width: 100%;
   height: 5%;
@@ -78,5 +78,11 @@ body, .form-control{
   border: solid 1px #000;
   border-radius: 5px;
   text-align: center;
+}
+
+.container {
+  margin-top: 10%;
+  border-radius: 6px;
+  background-color: #ddd;
 }
 /** LOGIN PAGE END **/

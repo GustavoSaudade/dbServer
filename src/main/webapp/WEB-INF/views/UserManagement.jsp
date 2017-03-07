@@ -11,6 +11,8 @@
     <script src="<c:url value='/static/js/service/user_service.js' />"></script>
     <script src="<c:url value='/static/js/controller/user_controller.js' />"></script>
     <script src="<c:url value='/static/js/controller/login_controller.js' />"></script>
+    <script src="<c:url value='/static/js/controller/logado_controller.js' />"></script>
+    <script src="<c:url value='/static/js/controller/erroLogin_controller.js' />"></script>
     
     <style>
       .username.ng-valid {
