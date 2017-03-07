@@ -168,5 +168,25 @@ public class AlmocoDemocraticoRestController {
         headers.setLocation(ucBuilder.path("/restaurante/{id}").buildAndExpand(restaurante.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
+
+    //------------------- Update a Restaurante --------------------------------------------------------
+    @RequestMapping(value = "/restaurante/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Restaurante> updateRestaurante(@PathVariable("id") long id, @RequestBody Restaurante restaurante) {
+        System.out.println("Updating Restaurante " + id);
+         
+        Restaurante currentRestaurante = restauranteService.findById(id);
+         
+        if (currentRestaurante==null) {
+            System.out.println("Restaurante with id " + id + " not found");
+            return new ResponseEntity<Restaurante>(HttpStatus.NOT_FOUND);
+        }
+ 
+        currentRestaurante.setNome(restaurante.getNome());
+        currentRestaurante.setTipo(restaurante.getTipo());
+        currentRestaurante.isAceitaVale(restaurante.setAceitaVale());
+         
+        restauranteService.updateRestaurante(currentRestaurante);
+        return new ResponseEntity<Restaurante>(currentRestaurante, HttpStatus.OK);
+    }
     //===================================== RESTAURANTES ============================================
 }
